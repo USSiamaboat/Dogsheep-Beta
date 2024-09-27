@@ -267,10 +267,10 @@ let field = MQ.MathField(answerSpan, {
             console.log(bests, error)
 
             if (error < 1e-15) {
-                setResult(latex + "= \\quad" + bests[0])
+                setResult(latex + "= \\quad " + bests[0])
             } else {
                 const nString = numeric.toString().slice(0, 7)
-                setResult(latex + "\\approx \\quad" + nString + "\\ldots" + "\\approx" + bests[0])
+                setResult(latex + " \\approx \\quad " + nString + " \\ldots " + " \\approx " + bests[0])
             }
         }
     }
