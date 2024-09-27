@@ -1,9 +1,10 @@
 // Config
 const MAX_ITER = 50
 const DIGITS = 14 // Keep < 16
+const CLOSE_ENOUGH = 10**(-12)
 const MAX_FRAC_SIZE = 20
 const FRAC_MAX = 10
-const CONV_SIZE = 4
+const CONV_SIZE = 3
 
 // Math
 function rounded(n) {
@@ -154,10 +155,10 @@ function approximate(value) {
     best_error = parseFloat("Infinity")
 
     function updateBest(latex, error) {
-        if (error < best_error) {
+        if (error + CLOSE_ENOUGH < best_error) {
             bests = [latex]
             best_error = error
-        } else if (error == best_error) {
+        } else if (error <= best_error + CLOSE_ENOUGH) {
             bests.push(latex)
         }
     }
@@ -234,6 +235,42 @@ function approximate(value) {
     return({"bests": bests, "error": best_error})
 }
 
+function complexity(latex) {
+    let curr = 0
+    let out = 0
+    let digits = 0
+
+    for (let i = latex.length-1; i >= 0; i--) {
+        if (isNaN(parseInt(latex[i]))) {
+            out += curr
+            curr = 0
+            digits = 0
+            continue
+        }
+
+        curr += parseInt(latex[i]) * (10**digits)
+        digits++
+    }
+
+    return out + curr
+}
+
+function chooseBest(bests) {
+    let bestComplexity = 1/0
+    let best = ""
+
+    for (const latex of bests) {
+        const comp = complexity(latex)
+
+        if (comp >= bestComplexity) continue
+
+        bestComplexity = comp
+        best = latex
+    }
+
+    return best
+}
+
 // Mathquill
 const MQ = MathQuill.getInterface(2)
 
@@ -273,14 +310,15 @@ let field = MQ.MathField(answerSpan, {
 
             const bests = result["bests"]
             const error = result["error"]
+            const best = chooseBest(bests)
 
-            console.log(bests, error)
+            console.log(best, error, bests)
 
             if (error < 1e-15) {
-                setResult(latex + "= \\quad " + bests[0])
+                setResult(latex + "= \\quad " + best)
             } else {
                 const nString = numeric.toString().slice(0, 7)
-                setResult(latex + " \\approx \\quad " + nString + " \\ldots " + " \\approx " + bests[0])
+                setResult(latex + " \\approx \\quad " + nString + " \\ldots " + " \\approx " + best)
             }
         }
     }
