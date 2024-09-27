@@ -251,7 +251,7 @@ let field = MQ.MathField(answerSpan, {
     charsThatBreakOutOfSupSub: '+-=<>',
     autoSubscriptNumerals: true,
     autoCommands: greek + " sqrt sum frac int infty nthroot",
-    autoOperatorNames: "sin cos tan cot sec csc arcsin arccos arctan arccot arcsec arccsc",
+    autoOperatorNames: "log ln sin cos tan cot sec csc arcsin arccos arctan arccot arcsec arccsc",
     maxDepth: 10,
     handlers: {
         enter: async () => {
