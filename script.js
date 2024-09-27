@@ -197,11 +197,21 @@ function approximate(value) {
             latex += `\\frac{${conv[0]}${symbol}}{${conv[1]}}`
         }
 
-        if (num != 0) {
-            latex += ` + \\frac{${num}}{${den}}`
+        if (num == 0) return latex
+
+        // Sign
+        if (num/den < 0) {
+            latex += "-"
+        } else {
+            latex += "+"
         }
 
-        return latex
+        num = Math.abs(num)
+        den = Math.abs(den)
+
+        if (den == 1) return latex + num
+
+        return latex + `\\frac{${num}}{${den}}`
     }
 
     for (let den = 1; den <= FRAC_MAX; den++) {
