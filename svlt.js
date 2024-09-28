@@ -107,6 +107,13 @@ function generateSimpleLogs() {
             pushSvlt(Math.log(x)/Math.log(base), `\\log_{${base}}{${x}}`)
         }
     }
+
+    // Natural log
+    for (let x = 2; x <= MAX_LOG; x++) {
+        if (!squareFree(x)) continue
+
+        pushSvlt(Math.log(x), `\\ln{${x}}`)
+    }
 }
 
 function generateConstant(c_value, c_latex) {
