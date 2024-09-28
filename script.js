@@ -240,7 +240,13 @@ function complexity(latex) {
     let out = 0
     let digits = 0
 
+    let nTerms = 1
+
     for (let i = latex.length-1; i >= 0; i--) {
+        if ((i != 0) && ((latex[i] == "+") || (latex[i] == "-"))) {
+            nTerms++
+        }
+
         if (isNaN(parseInt(latex[i]))) {
             out += curr
             curr = 0
@@ -252,7 +258,10 @@ function complexity(latex) {
         digits++
     }
 
-    return out + curr
+    out += curr
+    out *= Math.sqrt(nTerms)
+
+    return out
 }
 
 function chooseBest(bests) {

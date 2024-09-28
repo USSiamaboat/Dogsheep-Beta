@@ -37,7 +37,7 @@ This partially solves the domain issue with using only continued fractions. Inte
 
 The Desmos evaluator is known to sometimes have non-negligible error between the best and computed decimal approximations of an expression. As a result, minimizing the distance between an approximated exact value and the estimated decimal may actually result in an exact value that is further away from the actual exact value.
 
-Dogsheep corrects for this with the assumption that simpler answers are more likely to be correct. The chosen heuristic  for the complexity of a candidate exact value is determined by the sum of all the numeric coefficients. For example, $\frac{123 \pi^{3}}{456} + \frac{78}{9}$ has complexity $123 + 3 + 456 + 78 + 9$.
+Dogsheep corrects for this with the assumption that simpler answers are more likely to be correct. The chosen heuristic  for the complexity of a candidate exact value is determined by the sum of all the numeric coefficients multiplied by the squareroot of the number of terms. For example, $\frac{123 \pi^{3}}{456} + \frac{78}{9}$ has complexity $(123 + 3 + 456 + 78 + 9) \cdot \sqrt{2}$.
 
 Within a small margin of error, all candidate exact values are ranked and selected only by minimizing their complexity.
 ## Wolfram Alpha competitor?
